@@ -1,2 +1,2 @@
 # Cocoa
-Cocoa App
+Cocoa app built with Flutter by Cameron Powers
