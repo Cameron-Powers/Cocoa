@@ -10,6 +10,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   void setupApp() async {
     await Future.delayed(const Duration(seconds: 2), (){});
+    // Load Google Map?
     Navigator.pushReplacementNamed(context, '/authentication');
   }
 

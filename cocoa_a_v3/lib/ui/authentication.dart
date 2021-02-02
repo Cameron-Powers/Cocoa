@@ -84,8 +84,6 @@ class _AuthenticationState extends State<Authentication> {
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: HexColor('#8547FF')),
                   ),
-                    hintText: 'Password',
-                    hintStyle: TextStyle(color: HexColor('#735240')),
                     labelText: 'Password',
                     labelStyle: TextStyle(color: HexColor('#735240')),
                   ),
@@ -121,6 +119,8 @@ class _AuthenticationState extends State<Authentication> {
                   ),
                 ),
               ),
+
+
               SizedBox(height: MediaQuery.of(context).size.height / 35),
               Container(
                 width: MediaQuery.of(context).size.width / 1.4,

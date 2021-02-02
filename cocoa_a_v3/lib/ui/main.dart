@@ -21,9 +21,7 @@ class MyApp extends StatelessWidget {
         '/':(context) => Loading(),
         '/authentication':(context) => Authentication(),
         '/home':(context) => HomeView(),
-        }
-      // title: 'Cocoa',
-      // home: Authentication(),
+      }
     );
   }
 }

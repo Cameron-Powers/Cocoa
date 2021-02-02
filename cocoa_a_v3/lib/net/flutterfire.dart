@@ -13,13 +13,13 @@ Future<bool> signIn(String email, String password) async {
 }
 
 Future<bool> register(String email, String password, String fname, String lname,
-    String phoneNumber) async {
+    String phoneNumber, String gender) async {
   try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
     // ignore: deprecated_member_use
     await Firestore.instance.collection('users').document().setData(
-        {'fname': fname, 'lname': lname, 'phoneNumber': 'phoneNumber'});
+        {'fname': fname, 'lname': lname, 'phoneNumber': phoneNumber, 'gender': gender, 'email':email});
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-passord') {

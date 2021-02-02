@@ -17,7 +17,7 @@ class _RegisterState extends State<Register> {
   TextEditingController _fNameField = TextEditingController();
   TextEditingController _lNameField = TextEditingController();
   TextEditingController _phoneField = TextEditingController();
-  String _genderField = 'Prefer not to answer';
+  String _genderField = 'Gender';
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _RegisterState extends State<Register> {
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: HexColor('#735240')),
+                style: TextStyle(color: HexColor('#000000')),
                 controller: _fNameField,
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
@@ -53,7 +53,7 @@ class _RegisterState extends State<Register> {
                     borderSide: BorderSide(color: HexColor('#8547FF')),
                   ),
                   labelText: 'First Name',
-                  labelStyle: TextStyle(color: HexColor('#735240')),
+                  labelStyle: TextStyle(color: HexColor('#000000')),
                 ),
               ),
             ),
@@ -62,7 +62,7 @@ class _RegisterState extends State<Register> {
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: HexColor('#735240')),
+                style: TextStyle(color: HexColor('#000000')),
                 controller: _lNameField,
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
@@ -72,7 +72,7 @@ class _RegisterState extends State<Register> {
                     borderSide: BorderSide(color: HexColor('#8547FF')),
                   ),
                   labelText: 'Last Name',
-                  labelStyle: TextStyle(color: HexColor('#735240')),
+                  labelStyle: TextStyle(color: HexColor('#000000')),
                 ),
               ),
             ),
@@ -81,7 +81,7 @@ class _RegisterState extends State<Register> {
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: HexColor('#735240')),
+                style: TextStyle(color: HexColor('#000000')),
                 controller: _phoneField,
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
@@ -91,22 +91,23 @@ class _RegisterState extends State<Register> {
                     borderSide: BorderSide(color: HexColor('#8547FF')),
                   ),
                   labelText: 'Phone Number',
-                  labelStyle: TextStyle(color: HexColor('#735240')),
+                  labelStyle: TextStyle(color: HexColor('#000000')),
                 ),
               ),
             ),
 
             // GENDER
+            SizedBox(height: MediaQuery.of(context).size.height / 80),
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: DropdownButton<String>(
                 value: _genderField,
                 icon: Icon(Icons.arrow_downward),
                 iconSize: 24,
-                elevation: 16,
-                style: TextStyle(color: HexColor('#735240')),
+                elevation: 0,
+                style: TextStyle(color: HexColor('#000000'), fontSize: 16),
                 underline: Container(
-                  height: 2,
+                  height: 1,
                   color: HexColor('#8547FF'),
                 ),
                 onChanged: (String newValue) {
@@ -115,10 +116,11 @@ class _RegisterState extends State<Register> {
                   });
                 },
                 items: <String>[
+                  'Gender',
                   'Female',
                   'Male',
                   'Non-Binary',
-                  'Prefer not to answer'
+                  'Prefer not to answer',
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -132,7 +134,7 @@ class _RegisterState extends State<Register> {
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: HexColor('#735240')),
+                style: TextStyle(color: HexColor('#000000')),
                 controller: _emailField,
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
@@ -141,10 +143,10 @@ class _RegisterState extends State<Register> {
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: HexColor('#8547FF')),
                   ),
-                  hintText: 'YourEmail@Example.com',
-                  hintStyle: TextStyle(color: HexColor('#735240')),
+                  hintText: 'Email@Example.com',
+                  hintStyle: TextStyle(color: HexColor('#000000')),
                   labelText: 'Email',
-                  labelStyle: TextStyle(color: HexColor('#735240')),
+                  labelStyle: TextStyle(color: HexColor('#000000')),
                 ),
               ),
             ),
@@ -153,7 +155,7 @@ class _RegisterState extends State<Register> {
             Container(
               width: MediaQuery.of(context).size.width / 1.3,
               child: TextFormField(
-                style: TextStyle(color: HexColor('#735240')),
+                style: TextStyle(color: HexColor('#000000')),
                 controller: _passwordField,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -163,10 +165,8 @@ class _RegisterState extends State<Register> {
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: HexColor('#8547FF')),
                   ),
-                  hintText: 'Password',
-                  hintStyle: TextStyle(color: HexColor('#735240')),
                   labelText: 'Password',
-                  labelStyle: TextStyle(color: HexColor('#735240')),
+                  labelStyle: TextStyle(color: HexColor('#000000')),
                 ),
               ),
             ),
@@ -187,7 +187,8 @@ class _RegisterState extends State<Register> {
                       _passwordField.text,
                       _fNameField.text,
                       _lNameField.text,
-                      _phoneField.text);
+                      _phoneField.text,
+                      _genderField);
                   if (shouldNavigate) {
                     Navigator.push(
                       context,
@@ -200,6 +201,35 @@ class _RegisterState extends State<Register> {
                 child: Text(
                   "register",
                   style: new TextStyle(
+                    fontSize: 28,
+                    fontFamily: 'brightSunshineCap',
+                  ),
+                ),
+              ),
+            ),
+
+            // BACK BUTTON
+            SizedBox(height: MediaQuery.of(context).size.height / 35),
+            Container(
+              width: MediaQuery.of(context).size.width / 1.4,
+              // alignment: Alignment.topLeft,
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                color: HexColor('#8547FF'),
+              ),
+              child: MaterialButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Authentication(),
+                    ),
+                  );
+                },
+                child: Text(
+                  'Back',
+                  style: TextStyle(
                     fontSize: 28,
                     fontFamily: 'brightSunshineCap',
                   ),
