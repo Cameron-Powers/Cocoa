@@ -1,4 +1,3 @@
-import 'package:cocoa_a_v3/net/flutterfire.dart';
 import 'package:flutter/material.dart';
 
 class AddView extends StatefulWidget {
@@ -48,13 +47,6 @@ class _AddViewState extends State<AddView> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
             color: Colors.white,
-          ),
-          child: MaterialButton(
-            onPressed: () async {
-              await addCoin(dropdownValue, _amountController.text);
-              Navigator.of(context).pop();
-            },
-            child: Text('Add'),
           ),
         ),
       ],

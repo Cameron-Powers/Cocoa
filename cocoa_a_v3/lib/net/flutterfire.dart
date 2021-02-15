@@ -34,26 +34,19 @@ Future<bool> register(String email, String password, String fname, String lname,
   }
 }
 
-Future<bool> addCoin(String id, String amount) async {
-  try {
-    String uid = FirebaseAuth.instance.currentUser.uid;
-    var value = double.parse(amount);
-    DocumentReference documentReference = FirebaseFirestore.instance
-        .collection('Users')
-        .doc(uid)
-        .collection('Coins')
-        .doc(id);
-    FirebaseFirestore.instance.runTransaction((transaction) async {
-      DocumentSnapshot snapshot = await transaction.get(documentReference);
-      if (!snapshot.exists) {
-        documentReference.set({'Amount': value});
-        return true;
-      }
-      double newAmount = snapshot.data()['Amount'] + value;
-      transaction.update(documentReference, {'Amount': newAmount});
-      return true;
+Future<bool> registerBusiness(String businessName, String owner, String address, String email, String phoneNumber, List businessAttributes, List businessCategories) async {
+  try{
+    FirebaseFirestore.instance.collection('businesses').add({
+    'businessName': businessName, 
+    'owner': owner, 
+    'address': address, 
+    'email': email,
+    'phoneNumber': phoneNumber,
+    'businessAttributes': businessAttributes,
+    'businessCategories': businessCategories,
     });
   } catch (e) {
     return false;
   }
+  return true;
 }

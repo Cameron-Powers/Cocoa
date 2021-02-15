@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cocoa_a_v3/ui/authentication.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cocoa_a_v3/net/flutterfire.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
@@ -107,7 +106,6 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
         height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               child: Center(
@@ -282,21 +280,32 @@ class _RegisterBusinessState extends State<RegisterBusiness> {
               ),
               child: MaterialButton(
                 onPressed: () async {
-                  // bool shouldNavigate = await register(
-                  //     _emailField.text,
-                  //     _passwordField.text,
-                  //     _fNameField.text,
-                  //     _lNameField.text,
-                  //     _phoneField.text,
-                  //     _genderField);
-                  // if (shouldNavigate) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => Authentication(),
-                  //     ),
-                  //   );
-                  // }
+                  List categories = [];
+                  List attributes = [];
+
+                  for(var i = 0; i < _selectedCategories.length; i++){
+                    categories.add(_selectedCategories[i].name);
+                  }
+                  for(var i = 0; i < _selectedAttributes.length; i++){
+                    attributes.add(_selectedAttributes[i].name);
+                  }
+                  bool shouldNavigate = await registerBusiness(
+                      _businessNameField.text,
+                      _ownerField.text,
+                      _addressField.text,
+                      _emailField.text,
+                      _phoneField.text,
+                      attributes,
+                      categories,
+                      );
+                  if (shouldNavigate) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterBusiness(),
+                      ),
+                    );
+                  }
                 },
                 child: Text(
                   "register",

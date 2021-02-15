@@ -5,22 +5,16 @@ import 'dart:async';
 import 'package:hexcolor/hexcolor.dart';
 import 'register_business.dart';
 
-import 'package:cocoa_a_v3/net/api_methods.dart';
-import 'add_view.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cocoa_a_v3/ui/add_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 class HomeView extends StatefulWidget {
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
-  Completer<GoogleMapController> _controller = Completer();
+  // Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = HashSet<Marker>();
   GoogleMapController _mapController;
-  BitmapDescriptor _markerIcon;
+  // BitmapDescriptor _markerIcon;
   static final CameraPosition _ottawa = CameraPosition(
     target: LatLng(45.4215, -75.6972),
     zoom: 13,
@@ -29,13 +23,13 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    _setMarkerIcon();
+     // _setMarkerIcon();
   }
 
-  void _setMarkerIcon() async {
-    _markerIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(), 'assets/logo3.png');
-  }
+  // void _setMarkerIcon() async {
+  //   _markerIcon = await BitmapDescriptor.fromAssetImage(
+  //       ImageConfiguration(), 'assets/logo3.png');
+  // }
 
   void _onMapCreated(GoogleMapController controller) {
     _mapController = controller;
