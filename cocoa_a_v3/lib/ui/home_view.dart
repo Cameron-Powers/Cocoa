@@ -1,9 +1,10 @@
-import 'dart:collection';
+// import 'dart:collection';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:hexcolor/hexcolor.dart';
 import 'register_business.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -11,10 +12,9 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  // Completer<GoogleMapController> _controller = Completer();
-  Set<Marker> _markers = HashSet<Marker>();
+  List<Marker> allMarkers = [];
   GoogleMapController _mapController;
-  // BitmapDescriptor _markerIcon;
+  // List<MarkerId, Marker> allMarkers = <MarkerId, Marker>[];
   static final CameraPosition _ottawa = CameraPosition(
     target: LatLng(45.4215, -75.6972),
     zoom: 13,
@@ -23,18 +23,33 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-     // _setMarkerIcon();
+    allMarkers.add(Marker(
+        markerId: MarkerId('myMarker'),
+        draggable: true,
+        onTap: () {
+          print('Marker Tapped');
+        },
+        position: LatLng(40.7128, -74.0060)));
   }
 
-  // void _setMarkerIcon() async {
-  //   _markerIcon = await BitmapDescriptor.fromAssetImage(
-  //       ImageConfiguration(), 'assets/logo3.png');
-  // }
-
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller) async {
     _mapController = controller;
+    List addressList = [];
+
+    // Adding all addresses to addressList from FireStore
+    await FirebaseFirestore.instance
+        .collection("businesses")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        addressList.add(result.data()['address']);
+      });
+    });
+    // print(addressList[1].toString());
+
     setState(() {
-      _markers.add(
+      allMarkers.add(
+        // ADD FIREBASE BUSINESSES HERE
         Marker(
           markerId: MarkerId("0"),
           position: LatLng(45.4215, -75.6972),
@@ -42,7 +57,6 @@ class _HomeViewState extends State<HomeView> {
             title: "Ottawa",
             snippet: "test",
           ),
-          // icon: _markerIcon,
         ),
       );
     });
@@ -59,6 +73,8 @@ class _HomeViewState extends State<HomeView> {
         title: Image.asset('assets/logo2.png', height: 70),
         backgroundColor: HexColor('#8547FF'),
       ),
+
+      // SIDE MENU
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -72,8 +88,10 @@ class _HomeViewState extends State<HomeView> {
             ListTile(
                 title: Text('Add Business'),
                 onTap: () async {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterBusiness()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterBusiness()));
                 }),
             ListTile(
               title: Text('Settings'),
@@ -90,12 +108,16 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
       ),
+
+      // MAP
       body: GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: _ottawa,
         onMapCreated: _onMapCreated,
-        markers: _markers,
+        markers: Set.from(allMarkers),
       ),
+
+      // RETURN TO OTTAWA BUTTON - CHANGE TO RETURN TO HOME (User can set home in settings)
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _backToOttawa,
         label: Text('Ottawa'),
